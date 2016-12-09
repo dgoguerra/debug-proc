@@ -13,10 +13,9 @@ module.exports = function(debugNamespace) {
     return function(proc, opts) {
         if (!opts) opts = {};
 
-        // boolean, whether if show stdout output or not
+        // boolean options
+        var showSpawnArgs = !!val(opts.spawnargs, true);
         var showStdout = !!val(opts.stdout, true);
-
-        // boolean, whether if show stderr output or not
         var showStderr = !!val(opts.stderr, true);
 
         // optional string to prepend each line with
@@ -61,6 +60,10 @@ module.exports = function(debugNamespace) {
             streamOpts.stderr = function(chunk) {
                 return chalk.red(decoration+chunk);
             };
+        }
+
+        if (showSpawnArgs) {
+            logger(chalk.green(decoration+proc.spawnargs.join(' ')));
         }
 
         // set up debug() and return the merged process stream

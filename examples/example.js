@@ -3,7 +3,7 @@ var path = require('path'),
     debugProc = require('../index.js')('proc');
 
 function spawnProcess() {
-    return spawn('./example-cmd.sh', []);
+    return spawn('./example-cmd.sh', ['abc', 123]);
 }
 
 setTimeout(function() {
@@ -13,9 +13,9 @@ setTimeout(function() {
 }, 0);
 
 setTimeout(function() {
-    console.log('process 2 (only stderr)');
+    console.log('process 2 (only stderr, without spawn args)');
     var proc = spawnProcess();
-    debugProc(proc, {stdout: false, decorate: 'name'});
+    debugProc(proc, {spawnargs: false, stdout: false, decorate: 'name'});
 }, 500);
 
 setTimeout(function() {
